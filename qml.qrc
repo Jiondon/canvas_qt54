@@ -5,5 +5,6 @@
         <file>Canvas_anyLine.qml</file>
         <file>Canvas_curve.qml</file>
         <file>Canvas_function.qml</file>
+        <file>Canvas_highcharts.qml</file>
     </qresource>
 </RCC>
