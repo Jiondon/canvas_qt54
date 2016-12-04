@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Canvans_point.qml</file>
+        <file>Canvas_anyLine.qml</file>
+        <file>Canvas_curve.qml</file>
+        <file>Canvas_function.qml</file>
+    </qresource>
+</RCC>
