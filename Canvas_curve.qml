@@ -58,9 +58,12 @@ Rectangle{
             ctx.stroke();
             requestPaint();
 
-            var newObject = Qt.createQmlObject("import QtQuick 2.0
+            var newObject = Qt.createQmlObject('import QtQuick 2.0
                 Item {
-                    x:parent.posX_s;y:parent.posY_s
+                    property int posX;   //不可直接在里面复制，通过属性传递到外面进行复制，否则会导致最后一次覆盖掉前面所有的
+                    property int posY;
+                    property string posStr;
+                    x:posX;y:posY
                     Canvas{
                         id:canvas_point;
                         width: 8;height: 8
@@ -68,7 +71,7 @@ Rectangle{
                             var ctx = getContext(\"2d\");
                             ctx.lineWidth = 2;
                             ctx.strokeStyle = \"red\";
-                            ctx.arc(4,4,4,Math.PI,-Math.PI,false);
+                            ctx.arc(2,2,2,Math.PI,-Math.PI,false);
                             ctx.stroke();
                         }
                         MouseArea{
@@ -82,7 +85,17 @@ Rectangle{
                         console.log(\"test 111\")
                     }
                 }
-                ",test, "point_canvas")
+                ',test, "point_canvas")
+            newObject.posX = posX; newObject.posY = posY;
+
+            //必须使用this，如果不使用this的话，会导致所有的值都成为最后一个的值???
+//            newObject.posStr = String(newObject.posX)+String(newObject.posY);
+            newObject.posStr = Qt.binding(function(){
+                console.log("point posX value:",String(this.posX),"point posY value::",String(this.posY));
+                return String(this.posX)+String(this.posY);
+            })
+
+            console.log(newObject.posStr);
         }
     }
 }
