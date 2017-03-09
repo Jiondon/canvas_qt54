@@ -10,6 +10,12 @@ Rectangle{
     height: 800;
     property var posX_s;  //设置起始绘图point（每次绘图完毕，结束的point设为起始的point）
     property var posY_s;
+    property variant listData;  //产生的数据，存放的数据链表
+    property var scale_space: 1;  //刻度单位
+
+    ListModel{
+        id:data_list;
+    }
 
     //画布
     Canvas{
@@ -63,6 +69,7 @@ Rectangle{
                     property int posX;   //不可直接在里面复制，通过属性传递到外面进行复制，否则会导致最后一次覆盖掉前面所有的
                     property int posY;
                     property string posStr;
+                    property var pointData:0;
                     x:posX;y:posY
                     Canvas{
                         id:canvas_point;
@@ -76,8 +83,25 @@ Rectangle{
                         }
                         MouseArea{
                             anchors.fill: canvas_point;
+                            hoverEnabled: true   //鼠标悬停开启
                             onClicked: {
                                 console.log(\"click point\");
+                            }
+                            onEntered:{
+                                console.log("enter the mouse area : ");
+                                text_id.visible = true;
+                            }
+                            onExited:{
+                                console.log("exit mouse area :: ");
+                                text_id.visible = false;
+                            }
+                            Text{
+                                id:text_id;
+                                anchors.left: parent.right;
+                                anchors.leftMargin: 10;
+                                anchors.horizontalCenter: parent.horizontalCenter;
+                                visible : false
+                                text:String(pointData);
                             }
                         }
                     }
@@ -97,5 +121,12 @@ Rectangle{
 
             console.log(newObject.posStr);
         }
+    }
+
+
+    function setData_list()
+    {
+        //生成随机数据
+        data_list.append({"data":20})
     }
 }
